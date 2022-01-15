@@ -41,13 +41,10 @@ alias n="enex"  # -> contextually equivalent to `npm ...` or `npm run ...`
 
 alias ni="enex install"    # -> npm install
 alias nu="enex uninstall"  # -> npm uninstall
-alias nt="enex test"       # -> npm test
 alias ns="enex start"      # -> npm start
-
+alias nt="enex test"       # -> npm test
 alias nb="enex build"      # -> npm run build
-alias nl="enex lint"       # -> npm run lint
 alias nb="enex format"     # -> npm run format
-alias nc="enex check"      # -> npm run check
 ```
 If you'd like to opt out of these default aliases or customize them, use env vars when initializing `enex` to configure:
 ```sh
