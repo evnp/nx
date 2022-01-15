@@ -1,0 +1,25 @@
+{
+  "name": "enex",
+  "version": "0.0.1",
+  "description": "A minimalist command runner for npm packages, with a focus on developer ergonomics.",
+  "main": "enex",
+  "files": [
+    "enex.sh"
+  ],
+  "bin": {
+    "enex": "enex"
+  },
+  "scripts": {
+    "lint": "shellcheck enex.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evnp/enex.git"
+  },
+  "homepage": "https://github.com/evnp/enex",
+  "author": "Evan Purcer <evanpurcer@gmail.com> (http://evnp.ca)",
+  "license": "MIT",
+  "devDependencies": {
+    "shellcheck": "1.1.0"
+  }
+}
