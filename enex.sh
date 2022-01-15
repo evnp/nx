@@ -1,50 +1,60 @@
 #!/usr/bin/env bash
 
-# enex 0.0.1
+# :: enex 0.0.2 ::
 
 function enex() {
-  local cmd="$1"
-  shift
-  if [[ "$( npm --h | awk '/access, adduser/,/whoami/' )" == *"${cmd}"* ]]; then
-    npm "${cmd}" -- "$@"
+  if [[ "$1" =~ ^(t(est)?|s(tart)?)$ || "$( npm --h | awk '/access, adduser/,/whoami/' )" != *"$1"* ]]; then
+    npm run "$1" -- "${@:2}"
   else
-    npm run "${cmd}" -- "$@"
+    npm "$@"
   fi
 }
 
-# ~ default command alias ~
-#   n : enex  (eg. n install : npm install, n build : npm run build, etc.)
-# ~ to disable ~
-#   ENEX_COMMAND=0 source "$HOME/enex/enex"
+# :: default command alias ::
+#    n -> enex
+#    eg. n install -> npm install, n build -> npm run build, etc.
+# :: to disable ::
+#    ENEX_COMMAND=0 source "$HOME/enex/enex"
 
 if [[ "${ENEX_COMMAND}" != "0" ]]; then
-  if [[ -n "${ENEX_VERBOSE}" ]]; then
-    echo "alias ${ENEX_COMMAND:-n}=\"enex\""
-  fi
+  [[ -n "${ENEX_VERBOSE}" ]] && echo "alias ${ENEX_COMMAND:-n}=\"enex\""
   # shellcheck disable=SC2139
   alias "${ENEX_COMMAND:-n}"="enex"
 fi
 
-# ~ default sub-command aliases ~
-#   ni : npm install   nu : npm uninstall   ns : npm start
-#   nt : npm test      nb : npm run build   nf : npm run format
-# ~ to disable ~
-#   ENEX_ALIASES=0 source "$HOME/enex/enex"
+# :: default sub-command aliases ::
+#    nb -> npm run build  nt -> npm test        nf -> npm run format
+#    ni -> npm install    nu -> npm uninstall   ns -> npm start
+#    nis, nid, nus, nud -> npm [un]install --save[-dev]
+# :: to disable ::
+#    ENEX_ALIASES=0 source "$HOME/enex/enex"
 
 if [[ "${ENEX_ALIASES}" != "0" ]]; then
   for word in $( tr -cs '[:alnum:]._-' ' ' <<< "${ENEX_ALIASES:-install,uninstall,start,test,build,format}" ); do
     if [[ "${ENEX_COMMAND}" == "0" ]]; then
-      if [[ -n "${ENEX_VERBOSE}" ]]; then
-        echo "alias ${ENEX_COMMAND:-enex}${word:0:1}=\"enex ${word}\""
-      fi
+      [[ -n "${ENEX_VERBOSE}" ]] && echo "alias ${ENEX_COMMAND:-enex}${word:0:1}=\"enex ${word}\""
       # shellcheck disable=SC2139
       alias "${ENEX_COMMAND:-enex}${word:0:1}"="enex ${word}"
-    else
-      if [[ -n "${ENEX_VERBOSE}" ]]; then
-        echo "alias ${ENEX_COMMAND:-n}${word:0:1}=\"enex ${word}\""
+      if [[ "${word}" =~ ^(un)?install$ ]]; then
+        [[ -n "${ENEX_VERBOSE}" ]] && echo "alias ${ENEX_COMMAND:-enex}${word:0:1}s=\"enex ${word} --save\""
+        [[ -n "${ENEX_VERBOSE}" ]] && echo "alias ${ENEX_COMMAND:-enex}${word:0:1}d=\"enex ${word} --save-dev\""
+        # shellcheck disable=SC2139
+        alias "${ENEX_COMMAND:-enex}${word:0:1}s"="enex ${word} --save"
+        # shellcheck disable=SC2139
+        alias "${ENEX_COMMAND:-enex}${word:0:1}d"="enex ${word} --save-dev"
       fi
+    else
+      [[ -n "${ENEX_VERBOSE}" ]] && echo "alias ${ENEX_COMMAND:-n}${word:0:1}=\"enex ${word}\""
       # shellcheck disable=SC2139
       alias "${ENEX_COMMAND:-n}${word:0:1}"="enex ${word}"
+      if [[ "${word}" =~ ^(un)?install$ ]]; then
+        [[ -n "${ENEX_VERBOSE}" ]] && echo "alias ${ENEX_COMMAND:-n}${word:0:1}s=\"enex ${word} --save\""
+        [[ -n "${ENEX_VERBOSE}" ]] && echo "alias ${ENEX_COMMAND:-n}${word:0:1}d=\"enex ${word} --save-dev\""
+        # shellcheck disable=SC2139
+        alias "${ENEX_COMMAND:-n}${word:0:1}s"="enex ${word} --save"
+        # shellcheck disable=SC2139
+        alias "${ENEX_COMMAND:-n}${word:0:1}d"="enex ${word} --save-dev"
+      fi
     fi
   done
 fi

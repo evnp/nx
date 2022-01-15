@@ -13,7 +13,25 @@ A minimalist command runner for npm packages, with a focus on developer ergonomi
 [![npm package](https://img.shields.io/npm/v/enex.svg)](https://www.npmjs.com/package/enex)
 [![license](https://img.shields.io/github/license/evnp/enex.svg?color=blue)](https://github.com/evnp/enex/blob/master/LICENSE.md)
 
-`enex` is only 50 lines of code (with comments!) — if you're interested in knowing exactly what will be running on your system, peruse it [here](https://github.com/evnp/enex/blob/main/enex.sh). Any project that touts minimalism should strive to be understood completely within a few minutes; this is, and will remain, a goal of `enex`.
+`enex` lets you interact with any NPM package — that is, anything with a `package.json` — in as few keystrokes as you want (or as possible!). It's eminently configurable, but with a default setup of `source $HOME/enex/enex` in your dotfile of choice, it will add these aliases to any shell:
+
+```sh
+n <cmd>      ->  npm <cmd> OR npm run <cmd>  # enex intelligently adds `run`
+                                             # only when necessary, but you
+ns <opts>    ->  npm start <opts>            # may use it if you prefer
+nt <opts>    ->  npm test <opts>
+nb <opts>    ->  npm run build <opts>
+nf <opts>    ->  npm run format <opts>
+
+ni <opts>    ->  npm install <opts>
+nu <opts>    ->  npm uninstall <opts>
+nis <opts>   ->  npm install --save <opts>
+nus <opts>   ->  npm uninstall --save <opts>
+nid <opts>   ->  npm install --save-dev <opts>
+nud <opts>   ->  npm uninstall --save-dev <opts>
+```
+
+`enex` is only 60 lines of code (with comments!) — if you're interested in knowing exactly what will be running on your system, peruse it [here](https://github.com/evnp/enex/blob/main/enex.sh). Any project that touts minimalism should strive to be understood completely within a few minutes; this is, and will remain, a goal of `enex`.
 
 Setup
 -----
@@ -39,12 +57,13 @@ Open a new shell instance and `enex` will have initialized these aliases:
 ```sh
 alias n="enex"  # -> contextually equivalent to `npm ...` or `npm run ...`
 
-alias ni="enex install"    # -> npm install
-alias nu="enex uninstall"  # -> npm uninstall
 alias ns="enex start"      # -> npm start
 alias nt="enex test"       # -> npm test
 alias nb="enex build"      # -> npm run build
-alias nb="enex format"     # -> npm run format
+alias nf="enex format"     # -> npm run format
+alias ni="enex install"    # -> npm install
+alias nu="enex uninstall"  # -> npm uninstall
+# also nis, nid, nus, nud for install/uninstall --save/--save-dev combinations, see above
 ```
 If you'd like to opt out of these default aliases or customize them, use env vars when initializing `enex` to configure:
 ```sh
