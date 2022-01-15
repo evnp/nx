@@ -4,13 +4,26 @@
 
 # shellcheck disable=SC2139
 
-function enex() {
-  if [[ "$1" =~ ^(t(est)?|s(tart)?)$ || "$( npm --h | awk '/access, adduser/,/whoami/' )," != *" $1,"* ]]; then
+function enex() (
+  if [[ "${ENEX_FIND}" != "0" ]]; then
+    # find and navigate to directory containing package.json, if it is not immediately adjacent:
+    local pkg
+    while ! [[ -f "./package.json" ]] ; do
+      [[ "$( pwd )" == "$HOME" ]] && echo "No package.json found." && exit 1
+      pkg="$( find . -name package.json -maxdepth 3 | grep -v node_modules | tail -1 )"
+      if [[ -n "${pkg}" ]]; then
+        cd "$( dirname "${pkg}" )" || exit 1
+      else
+        cd .. || exit 1
+      fi
+    done
+  fi
+  if [[ "$1" =~ ^(t(est)?|s(tart)?)$ || "$( npm -h | awk '/access, adduser/,/whoami/' )," != *" $1,"* ]]; then
     npm run "$1" -- "${@:2}"
   else
     npm "$@"
   fi
-}
+)
 
 # :: default command alias ::
 #    n -> enex
@@ -19,7 +32,6 @@ function enex() {
 #    ENEX_COMMAND=0 source "$HOME/enex/enex"
 if [[ "${ENEX_COMMAND}" != "0" ]]; then
   [[ -n "${ENEX_VERBOSE}" ]] && echo "alias ${ENEX_COMMAND:-n}=\"enex\""
-  # shellcheck disable=SC2139
   alias "${ENEX_COMMAND:-n}"="enex"
 fi
 
@@ -32,9 +44,7 @@ fi
 #    ENEX_ALIASES=0 source "$HOME/enex/enex"
 if [[ "${ENEX_ALIASES}" != '0' ]]; then
   for word in $( tr -cs '[:alnum:]._-' ' ' <<< "${ENEX_ALIASES:-install,uninstall,start,test,build,format}" ); do
-    if [[ "${ENEX_COMMAND}" == '0' ]]; then
-      ENEX_COMMAND='enex'
-    fi
+    [[ "${ENEX_COMMAND}" == '0' ]] && ENEX_COMMAND='enex'
     [[ -n "${ENEX_VERBOSE}" ]] && echo "alias ${ENEX_COMMAND:-n}${word:0:1}=\"enex ${word}\""
     alias "${ENEX_COMMAND:-n}${word:0:1}"="enex ${word}"
     if [[ "${word}" =~ ^(un)?install$ ]]; then

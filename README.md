@@ -32,7 +32,7 @@ nid <opts>  ->  npm install --save-dev <opts>
 nud <opts>  ->  npm uninstall --save-dev <opts>
 ```
 
-`enex` is only 50 lines of code (with comments!) — if you're interested in knowing exactly what will be running on your system, peruse it [here](https://github.com/evnp/enex/blob/main/enex.sh). Any project that touts minimalism should strive to be understood completely within a few minutes; this is, and will remain, a goal of `enex`.
+`enex` is only 60 lines of code (with comments!) — if you're interested in knowing exactly what will be running on your system, peruse it [here](https://github.com/evnp/enex/blob/main/enex.sh). Any project that touts minimalism should strive to be understood completely within a few minutes; this is, and will remain, a goal of `enex`.
 
 Setup
 -----
@@ -87,10 +87,29 @@ ENEX_ALIASES=build,push,deploy source "$HOME/enex/enex.sh"
 # note: this overrides the set of default aliases entirely, so you
 #       will need to redefine them explicitly if some are desired
 ```
-During configuration, it may be useful to have enex output the complete set of aliases that are generated when a new shell session begins. To do so, add:
+
+By default, if enex does not detect a `package.json` file within the directory it is being invoked from, it will search for one within directories up to 2 levels below, and arbitary levels above, exiting immediately if it reaches your home directory. This allows you to run enex commands from anywhere within a project with this very common directory structure, or similar project structures:
+```sh
+$HOME/
+ └─project/
+   ├─backend/
+   │ └─dir/
+   └─frontend/
+     ├─src/
+     └─dir/
+```
+Normally, you'd need to first navigate to the `frontend/` before invoking any `npm` command; enex handles this step invisibly for you in a subshell, so that you remain in the same directory you started in after the operation is complete.
+
+If for any reason you prefer to skip this "auto-find" step, add the following env var to your enex configuration:
+```sh
+ENEX_FIND=0 source "$HOME/enex/enex.sh"
+```
+
+While sorting out configuration, it may be useful to have enex output the complete set of aliases that are generated when a new shell session begins. To do so, add:
 ```sh
 ENEX_VERBOSE=1 source "$HOME/enex/enex.sh"
 ```
+
 That's it!
 
 License
