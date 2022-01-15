@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# :: enex 0.0.3 ::
+# :: enex 0.0.4 ::
 
 # shellcheck disable=SC2139
 
 function enex() {
-  if [[ "$1" =~ ^(t(est)?|s(tart)?)$ || "$( npm --h | awk '/access, adduser/,/whoami/' )" != *"$1"* ]]; then
+  if [[ "$1" =~ ^(t(est)?|s(tart)?)$ || "$( npm --h | awk '/access, adduser/,/whoami/' )," != *" $1,"* ]]; then
     npm run "$1" -- "${@:2}"
   else
     npm "$@"
