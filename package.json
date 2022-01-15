@@ -1,6 +1,6 @@
 {
   "name": "enex",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A minimalist command runner for npm packages, with a focus on developer ergonomics.",
   "main": "enex",
   "files": [

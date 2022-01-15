@@ -18,10 +18,11 @@ A minimalist command runner for npm packages, with a focus on developer ergonomi
 ```sh
 n <cmd>     ->  npm <cmd> OR npm run <cmd> # enex intelligently adds `run`
                                            # only when necessary, but you
-ns <opts>   ->  npm start <opts>           # may use it if you prefer
-nt <opts>   ->  npm test <opts>
+ns <opts>   ->  npm run start <opts>       # may use it if you prefer
 nb <opts>   ->  npm run build <opts>
 nf <opts>   ->  npm run format <opts>
+nt <opts>   ->  npm run test <opts>
+ntw <opts>  ->  npm run test -- --watch <opts>
 
 ni <opts>   ->  npm install <opts>
 nu <opts>   ->  npm uninstall <opts>
@@ -31,7 +32,7 @@ nid <opts>  ->  npm install --save-dev <opts>
 nud <opts>  ->  npm uninstall --save-dev <opts>
 ```
 
-`enex` is only 60 lines of code (with comments!) — if you're interested in knowing exactly what will be running on your system, peruse it [here](https://github.com/evnp/enex/blob/main/enex.sh). Any project that touts minimalism should strive to be understood completely within a few minutes; this is, and will remain, a goal of `enex`.
+`enex` is only 50 lines of code (with comments!) — if you're interested in knowing exactly what will be running on your system, peruse it [here](https://github.com/evnp/enex/blob/main/enex.sh). Any project that touts minimalism should strive to be understood completely within a few minutes; this is, and will remain, a goal of `enex`.
 
 Setup
 -----
@@ -58,7 +59,7 @@ Open a new shell instance and `enex` will have initialized these aliases:
 alias n="enex"  # -> contextually equivalent to `npm ...` or `npm run ...`
 
 alias ns="enex start"      # -> npm start
-alias nt="enex test"       # -> npm test
+alias nt="enex test"       # -> npm test; also ntw -> npm run test -- --watch
 alias nb="enex build"      # -> npm run build
 alias nf="enex format"     # -> npm run format
 alias ni="enex install"    # -> npm install
