@@ -18,7 +18,7 @@ function enex() (
       fi
     done
   fi
-  if [[ "$1" =~ ^(t(est)?|s(tart)?)$ || "$( npm -h | awk '/access, adduser/,/whoami/' )," != *" $1,"* ]]; then
+  if [[ "$1" =~ ^(t(est)?|s(tart)?|h(elp)?)$ || "$( npm -h | awk '/access, adduser/,/whoami/' )," != *" $1,"* ]]; then
     npm run "$1" -- "${@:2}"
   else
     npm "$@"
@@ -43,7 +43,7 @@ fi
 # :: to disable ::
 #    ENEX_ALIASES=0 source "$HOME/enex/enex"
 if [[ "${ENEX_ALIASES}" != '0' ]]; then
-  for word in $( tr -cs '[:alnum:]._-' ' ' <<< "${ENEX_ALIASES:-install,uninstall,start,test,build,format}" ); do
+  for word in $( tr -cs '[:alnum:]._-' ' ' <<< "${ENEX_ALIASES:-install,uninstall,start,test,build,format,help}" ); do
     [[ "${ENEX_COMMAND}" == '0' ]] && ENEX_COMMAND='enex'
     [[ -n "${ENEX_VERBOSE}" ]] && echo "alias ${ENEX_COMMAND:-n}${word:0:1}=\"enex ${word}\""
     alias "${ENEX_COMMAND:-n}${word:0:1}"="enex ${word}"
