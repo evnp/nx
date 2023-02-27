@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# :: enex 0.0.4 ::
+# :: enex 0.0.6 ::
 
 # shellcheck disable=SC2139
 
