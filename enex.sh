@@ -36,14 +36,14 @@ if [[ "${ENEX_COMMAND}" != "0" ]]; then
 fi
 
 # :: default sub-command aliases ::
-#    nb -> npm run build  nt -> npm test        nf -> npm run format
+#    nb -> npm run build  nt -> npm test        nf -> npm run format  nl -> npm link
 #    ni -> npm install    nu -> npm uninstall   ns -> npm start
+#    ntw -> npm run test -- --watch             nh -> npm run help
 #    nis, nid, nus, nud -> npm [un]install --save[-dev]
-#    ntw -> npm run test -- --watch
 # :: to disable ::
 #    ENEX_ALIASES=0 source "$HOME/enex/enex"
 if [[ "${ENEX_ALIASES}" != '0' ]]; then
-  for word in $( tr -cs '[:alnum:]._-' ' ' <<< "${ENEX_ALIASES:-install,uninstall,start,test,build,format,help}" ); do
+  for word in $( tr -cs '[:alnum:]._-' ' ' <<< "${ENEX_ALIASES:-install,uninstall,start,test,build,format,link,help}" ); do
     [[ "${ENEX_COMMAND}" == '0' ]] && ENEX_COMMAND='enex'
     [[ -n "${ENEX_VERBOSE}" ]] && echo "alias ${ENEX_COMMAND:-n}${word:0:1}=\"enex ${word}\""
     alias "${ENEX_COMMAND:-n}${word:0:1}"="enex ${word}"
