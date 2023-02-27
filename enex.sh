@@ -6,11 +6,11 @@
 
 function enex() (
   if [[ "${ENEX_FIND}" != "0" ]]; then
-    # find and navigate to directory containing package.json, if it is not immediately adjacent:
     local pkg
     while ! [[ -f "./package.json" ]] ; do
       [[ "$( pwd )" == "$HOME" ]] && echo "No package.json found." && exit 1
-      pkg="$( find . -name package.json -maxdepth 3 | grep -v node_modules | tail -1 )"
+      # find closest package.json (file path containing fewest "/" characters):
+      pkg="$( find . -name package.json -maxdepth 3 | grep -v node_modules | awk -F/ '{print NF,$0}' | sort -n | cut -d' ' -f2- | head -1 )"
       if [[ -n "${pkg}" ]]; then
         cd "$( dirname "${pkg}" )" || exit 1
       else
