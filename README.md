@@ -86,7 +86,15 @@ export ENEX_ALIASES=build,push,deploy; source "$HOME/enex/enex.sh"
 > alias nd="enex deploy"
 # note: this overrides the set of default aliases entirely, so you
 #       will need to redefine them explicitly if some are desired
+
+# to define an alias whose shortcut does not match its first letter:
+export ENEX_ALIASES=build,x/specialthing,deploy; source "$HOME/enex/enex.sh"
+> alias n="enex"
+> alias nb="enex build"
+> alias nx="enex specialthing"
+> alias nd="enex deploy"
 ```
+
 
 By default, if enex does not detect a `package.json` file within the directory it is being invoked from, it will search for one within directories up to 2 levels below, and an arbitary number of levels above, exiting immediately if it reaches your home directory. This allows you to run enex commands from anywhere within a project with this very common directory structure, or similar project structures:
 ```sh
