@@ -1,22 +1,22 @@
 {
-  "name": "enex",
-  "version": "0.0.8",
+  "name": "nx.sh",
+  "version": "1.0.0",
   "description": "A minimalist command runner for npm packages, with a focus on developer ergonomics.",
-  "main": "enex",
+  "main": "nx.sh",
   "files": [
-    "enex.sh"
+    "nx.sh"
   ],
   "bin": {
-    "enex": "enex"
+    "nx": "nx"
   },
   "scripts": {
-    "lint": "shellcheck enex.sh"
+    "lint": "shellcheck nx.sh"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/evnp/enex.git"
+    "url": "https://github.com/evnp/nx.git"
   },
-  "homepage": "https://github.com/evnp/enex",
+  "homepage": "https://nx.evnp.sh",
   "author": "Evan Purcer <evanpurcer@gmail.com> (http://evnp.ca)",
   "license": "MIT",
   "devDependencies": {
