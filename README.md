@@ -109,7 +109,7 @@ export NX_ALIASES=build,x/specialthing,deploy; source "$HOME/nx/nx.sh"
 ```
 
 
-By default, if nx does not detect a `package.json` file within the directory it is being invoked from, it will search for one within directories up to 2 levels below, and an arbitary number of levels above, exiting immediately if it reaches your home directory. This allows you to run nx commands from anywhere within a project with this very common directory structure, or similar project structures:
+By default, if `nx` does not detect a `package.json` file within the directory it is being invoked from, it will search for one within directories up to 2 levels below, and an arbitrary number of levels above, exiting immediately if it reaches your home directory. This allows you to run `nx` commands from anywhere within a project with this very common directory structure, or similar project structures:
 ```sh
 $HOME/
  └─project/
@@ -141,7 +141,15 @@ While sorting out configuration, it may be useful to have nx output the complete
 export NX_VERBOSE=1; source "$HOME/nx/nx.sh"
 ```
 
-That's it!
+Why?
+----
+One of the things that makes me happiest is building small tools that I use every day. This seems to be the case even when I'm the _only_ one that uses them! Every time those characters jolt forth, invoking something from the void that hadn't existed before, I feel a twinge of satisfaction.
+
+The most effective way I've found to accomplish this comes in the form of small bash scripts, composed in traditional unix fashion. Every time I work on one of these scripts, I can feel more of the bash surface-area sticking in my mind. This has had a noticeable side effect of improving my abilities in everyday shell-scripting tasks.
+
+Keeping things small can sometimes be a satisfying challenge. With `nx`, this has resulted in a program that fits onto a single MacBook Pro screen, 13", 13pt font size, without compromising on the desired featureset:
+
+![full nx source code](https://raw.githubusercontent.com/evnp/nx/main/source.png)
 
 License
 -------
