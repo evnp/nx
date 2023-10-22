@@ -26,17 +26,17 @@ nf <opts>   ->  npm run format <opts>
 nl <opts>   ->  npm run lint <opts>
 nk <opts>   ->  npm run link <opts>
 nt <opts>   ->  npm run test <opts>
-nt w <opts>   ->  npm run test --watch <opts>
-# `w` may be added to any nx command to produce `--watch`
+nt w <opts> ->  npm run test --watch <opts>
+#  w may be added to any nx command in place of --watch
 
-ni <pkg>   ->  npm install <pkg>
-nu <pkg>   ->  npm uninstall <pkg>
-nis <pkg>  ->  npm install --save <pkg>
-nus <pkg>  ->  npm uninstall --save <pkg>
-nid <pkg>  ->  npm install --save-dev <pkg>
-nud <pkg>  ->  npm uninstall --save-dev <pkg>
-nig <pkg>  ->  npm install --global <pkg>
-nug <pkg>  ->  npm uninstall --glboal <pkg>
+ni <pkg>    ->  npm install <pkg>
+nu <pkg>    ->  npm uninstall <pkg>
+nis <pkg>   ->  npm install --save <pkg>
+nus <pkg>   ->  npm uninstall --save <pkg>
+nid <pkg>   ->  npm install --save-dev <pkg>
+nud <pkg>   ->  npm uninstall --save-dev <pkg>
+nig <pkg>   ->  npm install --global <pkg>
+nug <pkg>   ->  npm uninstall --glboal <pkg>
 ```
 
 Of these aliases, only `nl` exists as a pre-existing Bash command (<https://ss64.com/bash/nl.html>), used for prefixing file lines with line numbers. If you'd like to disable this particular `nx` alias so that the built-in `nl` is not overridden, use this configuration in your shell rc file:
