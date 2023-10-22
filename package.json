@@ -1,6 +1,6 @@
 {
   "name": "nx.sh",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A minimalist command runner for npm packages, with a focus on developer ergonomics.",
   "main": "nx.sh",
   "files": [
