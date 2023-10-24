@@ -10,7 +10,7 @@ A minimalist command runner for npm packages, with a focus on developer ergonomi
 
 [![shellcheck](https://github.com/evnp/nx/workflows/shellcheck/badge.svg)](https://github.com/evnp/nx/actions)
 [![latest release](https://img.shields.io/github/release/evnp/nx.svg)](https://github.com/evnp/nx/releases/latest)
-[![npm package](https://img.shields.io/npm/v/nx.svg)](https://www.npmjs.com/package/nx)
+[![npm package](https://img.shields.io/npm/v/nx.sh.svg)](https://www.npmjs.com/package/nx.sh)
 [![license](https://img.shields.io/github/license/evnp/nx.svg?color=blue)](https://github.com/evnp/nx/blob/master/LICENSE.md)
 
 `nx` lets you interact with any NPM package (anything with a `package.json`) in as few keystrokes as as possible.<br>
