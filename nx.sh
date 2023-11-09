@@ -18,7 +18,7 @@ function nx() ( local pkg="" cmd="" npmcmds=""
   [[ "${NX_NVM}" =~ ^(1|true|TRUE)$ ]] && nvm use &>/dev/null
   # :: await confirmation of current node+npm versions before executing command :: export NX_CONFIRM=1; source "$HOME/nx/nx.sh" (to enable) ::
   if [[ "${NX_CONFIRM}" =~ ^(1|true|TRUE)$ ]]; then
-    read -rsn1 -p "${cmd[*]} ${*}"$'\n'"Press any key to run · CTRL+C to cancel · node $( node -v ) · npm $( npm -v )"$'\n\n'
+    read -rsn1 -p "${cmd[*]} ${*}"$'\n'"${cmd[*]//?/˙} ${*//?/˙}"$'\n'"Press any key to run · CTRL+C to cancel · node $( node -v ) · npm $( npm -v )"$'\n\n'
   fi
   if (( $# )); then
     "${cmd[@]}" "${@}" # :: execute npm command with additional args::
