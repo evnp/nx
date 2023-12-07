@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# :: nx 1.0.3 ::
+# :: nx 1.0.4 ::
 # shellcheck disable=SC2139 # shellcheck.net/wiki/SC2139 # allow parameter expansion within alias strings #
 function nx() ( local pkg="" cmd="" npmcmds=""
   npmcmds="$( npm -h | awk '/access/,/whoami/' | sed -E 's/ (help|start|test),//g' | xargs | sed 's/, /|/g' )" || true
@@ -17,9 +17,11 @@ function nx() ( local pkg="" cmd="" npmcmds=""
   done
   # :: call "nvm use" automatically before running commands :: to enable auto-nvm behavior, export NX_NVM=1; source "$HOME/nx/nx.sh" ::
   [[ "${NX_NVM}" =~ ^(1|true|TRUE)$ ]] && nvm use &>/dev/null
-  # :: await confirmation of current node+npm versions before executing command :: to enable await-confirm behavior, export NX_CONFIRM=1; source "$HOME/nx/nx.sh" ::
+  # :: await confirmation of current node+npm versions before executing command :: to enable await-confirm behavior, export NX_CONFIRM=1 source "$HOME/nx/nx.sh" ::
   if [[ "${NX_CONFIRM}" =~ ^(1|true|TRUE)$ ]]; then
     read -rsn1 -p "${cmd[*]} ${*}"$'\n'"${cmd[*]//?/˙} ${*//?/˙}"$'\n'"Press any key to run · CTRL+C to cancel · node $( node -v ) · npm $( npm -v )"$'\n\n'
+  elif ! [[ "${NX_QUIET}" =~ ^(1|true|TRUE)$ ]]; then
+    echo "${cmd[*]} ${*}"$'\n'"${cmd[*]//?/˙} ${*//?/˙}"$'\n'"node $( node -v | tr -d 'v' ) · npm $( npm -v | tr -d 'v' )"$'\n\n'
   fi
   if (( $# )); then
     "${cmd[@]}" "${@}" # :: execute npm command with additional args::
@@ -33,7 +35,7 @@ function nx() ( local pkg="" cmd="" npmcmds=""
 #    ns -> npm start       nk -> npm link   ni -> npm install      nu -> npm uninstall   nis, nid, nus, nud -> npm [un]install --save[-dev]
 if ! [[ "${NX_ALIASES}" =~ ^(0|false|FALSE)$ ]]; then
   alias "${NX_COMMAND:-n}"='nx'
-  for word in $( tr -cs '[:alnum:]._-/' ' ' <<< "${NX_ALIASES:-install,uninstall,start,test,build,format,lint,k/link,publish,help}" ); do
+  for word in $( tr -cs '[:alnum:]._-/' ' ' <<< "${NX_ALIASES:-install,uninstall,start,test,build,format,lint,k/link,publish,help},${NX_EXTEND_ALIASES:-}" ); do
     [[ "${NX_COMMAND}" =~ ^(0|false|FALSE)$ ]] && NX_COMMAND='nx'
     alias "${NX_COMMAND:-n}${word:0:1}"="nx ${word#[a-z]/}"; [[ -n "${NX_VERBOSE}" ]] && alias "${NX_COMMAND:-n}${word:0:1}"
     if [[ "${word}" =~ ^(un)?install$ ]]; then
