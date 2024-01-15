@@ -6,7 +6,7 @@ function nx() ( local pkg="" cmd="" npmcmds=""
   # :: print current aliases and exit when "n" is run with no arguments ::
   [[ -z "$1" ]] && alias | grep "='nx " | sed 's/^alias //' | sed 's/=/ · /' | sed 's/nx /npm run /' | sed -E "s/run (${npmcmds})/\1/" | tr -d "'" && exit 0
   [[ "|${npmcmds}|" == *"|$1|"* ]] && cmd=('npm' "$1") || cmd=('npm' 'run' "$1")
-  [[ "$2" == 'w' ]] && set -- "$1" '--watch' "${@:3}" # :: rewrite 'w' to '--watch' if provided as second arg ""
+  [[ "$2" == 'w' ]] && set -- "$1" '--' '--watch' "${@:3}" # :: rewrite 'w' to '--' '--watch' if provided as second arg ""
   shift # :: done with command arg, following args are all arguments to command ::
   # :: find closest package.json (file path containing fewest "/" characters) :: to disable auto-find behavior, export NX_FIND=0; source "$HOME/nx/nx.sh" ::
   while [[ ! "${NX_FIND}" =~ ^(0|false|FALSE)$ && ! -f './package.json' ]] && [[ "$1" != '--global' ]]; do
