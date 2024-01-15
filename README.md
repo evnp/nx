@@ -1,4 +1,4 @@
-A minimalist command runner for npm packages, with a focus on developer ergonomics.
+A minimalist command runner for npm packages, with a focus on dev-ergonomics.
 
 ```
  __   __    __  __
@@ -17,35 +17,38 @@ A minimalist command runner for npm packages, with a focus on developer ergonomi
 With a default setup of `source $HOME/nx/nx.sh` in your dotfile of choice, it will add these aliases to any shell:
 
 ```sh
-n           ->  # show list of currently configured nx aliases
-n <cmd>     ->  npm <cmd> OR npm run <cmd>  # nx intelligently adds `run`
-                                            # only when necessary, but you
-ns <opts>   ->  npm run start <opts>        # may use it if you prefer
-nb <opts>   ->  npm run build <opts>
-nf <opts>   ->  npm run format <opts>
-nl <opts>   ->  npm run lint <opts>
-nk <opts>   ->  npm run link <opts>
-nt <opts>   ->  npm run test <opts>
-nt w <opts> ->  npm run test --watch <opts>
-#  w may be added to any nx command in place of --watch
+n  ···········>  show list of available nx aliases
 
-ni <pkg>    ->  npm install <pkg>
-nu <pkg>    ->  npm uninstall <pkg>
-nis <pkg>   ->  npm install --save <pkg>
-nus <pkg>   ->  npm uninstall --save <pkg>
-nid <pkg>   ->  npm install --save-dev <pkg>
-nud <pkg>   ->  npm uninstall --save-dev <pkg>
-nig <pkg>   ->  npm install --global <pkg>
-nug <pkg>   ->  npm uninstall --glboal <pkg>
+n CMD ARGS  ··>  npm CMD │ npm run CMD ┐ nx intelligently adds "run"
+                                       │ only when necessary, but you
+ns  ····>  npm run start               │ may be explicit if you prefer
+nb  ····>  npm run build               └──────────────────────────────
+nf  ····>  npm run format
+nl  ····>  npm run lint
+np  ····>  npm run publish
+nk  ····>  npm run link
+nh  ····>  npm run help
+nt  ····>  npm run test
+nt w  ··>  npm run test -- --watch
+   └─ may be added to any nx command in place of --watch
+
+ni  NAME  ····>  npm install NAME
+nu  NAME  ····>  npm uninstall NAME
+nis NAME  ····>  npm install   --save NAME
+nus NAME  ····>  npm uninstall --save NAME
+nid NAME  ····>  npm install   --save-dev NAME
+nud NAME  ····>  npm uninstall --save-dev NAME
+nig NAME  ····>  npm install   --global NAME
+nug NAME  ····>  npm uninstall --global NAME
 ```
 
 Of these aliases, only `nl` exists as a pre-existing Bash command (<https://ss64.com/bash/nl.html>), used for prefixing file lines with line numbers. If you'd like to disable this particular `nx` alias so that the built-in `nl` is not overridden, use this configuration in your shell rc file:
 
 ```bash
-export NX_ALIASES=install,uninstall,start,test,build,format,k/link,help; source "$HOME/nx/nx.sh"
+export NX_ALIASES=install,uninstall,start,test,build,format,k/link,publish,help; source "$HOME/nx/nx.sh"
 ```
 
-`nx` is only 50 lines of code (with comments!) — if you're interested in knowing exactly what will be running on your system, peruse it [here](https://github.com/evnp/nx/blob/main/nx.sh). Any project that touts minimalism should strive to be understood completely within a few minutes; this is, and will remain, a goal of `nx`.
+`nx` is less than 50 lines of code (with comments!) — if you're interested in knowing exactly what will be running on your system, peruse it [here](https://github.com/evnp/nx/blob/main/nx.sh). Any project with minimalism as a core tenet should strive to be understood completely within a few minutes. This is, and will remain, a goal of `nx`.
 
 Setup
 -----
@@ -81,13 +84,13 @@ alias nu="nx uninstall"  # -> npm uninstall
 ```
 If you'd like to opt out of these default aliases or customize them, use env vars when initializing `nx` to configure:
 ```sh
-# to opt out of `n` alias and simply use the full command `nx`:
+# to opt out of "n" abbreviated command and instead use the full command "nx":
 export NX_COMMAND=0; source "$HOME/nx/nx.sh"
 
-# to opt out of nx aliasing altogether:
+# to opt out of all aliases provided by nx:
 export NX_COMMAND=0; export NX_ALIASES=0; source "$HOME/nx/nx.sh"
 
-# to use the custom command `myencmd` to invoke nx instead of `n`:
+# to use the custom command "myencmd" to invoke nx instead of "n":
 export NX_COMMAND=myencmd; source "$HOME/nx/nx.sh"
 > alias myencmd="nx"
 
@@ -97,8 +100,7 @@ export NX_ALIASES=build,push,deploy; source "$HOME/nx/nx.sh"
 > alias nb="nx build"
 > alias np="nx push"
 > alias nd="nx deploy"
-# note: this overrides the set of default aliases entirely, so you
-#       will need to redefine them explicitly if some are desired
+# note: this overrides the default set of nx aliases entirely
 
 # to define an alias whose shortcut does not match its first letter:
 export NX_ALIASES=build,x/specialthing,deploy; source "$HOME/nx/nx.sh"
@@ -106,8 +108,14 @@ export NX_ALIASES=build,x/specialthing,deploy; source "$HOME/nx/nx.sh"
 > alias nb="nx build"
 > alias nx="nx specialthing"
 > alias nd="nx deploy"
-```
 
+# to extend the default set of nx aliases with your own:
+export NX_EXTEND_ALIASES=deploy,x/specialthing; source "$HOME/nx/nx.sh"
+> alias nd="nx deploy"
+> alias nx="nx specialthing"
+# ... and all other default nx aliases will also remain available
+
+```
 
 By default, if `nx` does not detect a `package.json` file within the directory it is being invoked from, it will search for one within directories up to 2 levels below, and an arbitrary number of levels above, exiting immediately if it reaches your home directory. This allows you to run `nx` commands from anywhere within a project with this very common directory structure, or similar project structures:
 ```sh
@@ -143,11 +151,11 @@ export NX_VERBOSE=1; source "$HOME/nx/nx.sh"
 
 Why?
 ----
-One of the things that makes me happiest is building small tools that I use every day. This seems to be the case even when I'm the _only_ one that uses them! Every time those characters jolt forth, invoking something from the void that hadn't existed before, I feel a twinge of satisfaction.
+The things that spark joy most reliably for me are small tools that I've built myself, for myself, _especially_ when they end up becoming tools I use every day. This seems to be the case even when I'm the _only_ one that uses them! Each time those muscle-remembered keystrokes invoke something from the void that hadn't existed before, I feel a twinge of satisfaction.
 
-The most effective way I've found to accomplish this comes in the form of small bash scripts, composed in traditional unix fashion. Every time I work on one of these scripts, I can feel more of the bash surface-area sticking in my mind. This has had a noticeable side effect of improving my abilities in everyday shell-scripting tasks.
+The most effective way I've found to accomplish this comes in the form of small bash scripts, composed in traditional unix fashion. When I work on one of these scripts, I can feel the bash surface-area slowly solidifying in my mind. This has had a wonderful side-effect of bolstering my everyday shell-scripting abilities in a way nothing else has.
 
-Keeping things small can sometimes be a satisfying challenge. With `nx`, this has resulted in a program that fits onto a single MacBook Pro screen, 13", 13pt font size, without compromising on the desired featureset:
+Keeping things small can be a satisfying challenge. The right constraints are the difference between a chore and a puzzle. With `nx`, this approach has resulted in a program that fits onto a single MacBook 13" screen at 13pt font size, without compromising on the desired featureset:
 
 ![full nx source code](https://raw.githubusercontent.com/evnp/nx/main/source.png)
 

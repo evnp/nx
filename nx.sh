@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# :: nx 1.0.4 ::
+# :: nx 1.0.5 ::
 # shellcheck disable=SC2139 # shellcheck.net/wiki/SC2139 # allow parameter expansion within alias strings #
 function nx() ( local pkg="" cmd="" npmcmds=""
   npmcmds="$( npm -h | awk '/access/,/whoami/' | sed -E 's/ (help|start|test),//g' | xargs | sed 's/, /|/g' )" || true
@@ -23,16 +23,12 @@ function nx() ( local pkg="" cmd="" npmcmds=""
   elif ! [[ "${NX_QUIET}" =~ ^(1|true|TRUE)$ ]]; then
     echo "${cmd[*]} ${*}"$'\n'"${cmd[*]//?/˙} ${*//?/˙}"$'\n'"node $( node -v | tr -d 'v' ) · npm $( npm -v | tr -d 'v' )"$'\n\n'
   fi
-  if (( $# )); then
-    "${cmd[@]}" "${@}" # :: execute npm command with additional args::
-  else
-    "${cmd[@]}" # :: execute npm command with no additional args::
-  fi
+  if (( $# )); then "${cmd[@]}" "${@}"; else "${cmd[@]}"; fi # :: execute npm command (only pass extra arguments if there _are_ extra arguments)
 )
 # :: default command alias :: n -> nx :: eg. n install -> npm install, n build -> npm run build, etc. :: to change name, export NX_COMMAND="name"; source "$HOME/nx/nx.sh" ::
 # :: default sub-command aliases :: to disable all aliases, export NX_ALIASES=0; source "$HOME/nx/nx.sh" ::
-#    nb -> npm run build   nt -> npm test   nf -> npm run format   nl -> npm run lint    nh -> npm run help    np -> npm publish
-#    ns -> npm start       nk -> npm link   ni -> npm install      nu -> npm uninstall   nis, nid, nus, nud -> npm [un]install --save[-dev]
+#    ns -> npm start       nt -> npm test   nf -> npm run format   nl -> npm run lint    nh -> npm run help    np -> npm publish
+#    nb -> npm run build   nk -> npm link   ni -> npm install      nu -> npm uninstall   nis, nid, nus, nud -> npm [un]install --save[-dev]
 if ! [[ "${NX_ALIASES}" =~ ^(0|false|FALSE)$ ]]; then
   alias "${NX_COMMAND:-n}"='nx'
   for word in $( tr -cs '[:alnum:]._-/' ' ' <<< "${NX_ALIASES:-install,uninstall,start,test,build,format,lint,k/link,publish,help},${NX_EXTEND_ALIASES:-}" ); do
