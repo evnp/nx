@@ -1,4 +1,4 @@
-A minimalist command runner for npm packages, with a focus on dev-ergonomics.
+Minimalist script runner for npm projects, focused on dev-ergonomics.
 
 ```
  __   __    __  __
@@ -52,35 +52,49 @@ export NX_ALIASES=install,uninstall,start,test,build,format,k/link,publish,help;
 
 Setup
 -----
+**Option 1:** Install globally via NPM:
 ```sh
+cd ~
 npm install -g nx
-which nx
-> /some/path/to/node_modules/.bin/nx.sh
 
-# add to your .bashrc / .zshrc / etc. ->
-source "/some/path/to/node_modules/.bin/nx.sh"
+# then add the following to your .bashrc / .zshrc / etc. ->
+source "$HOME/node_modules/.bin/nx.sh"
 ```
-Or if you prefer, install by checking out the repository manually:
+**Option 2:** Install locally in a project `package.json` via NPM:
 ```sh
+cd yourproject
+npm install --save-dev nx
+
+# then add the following to your .bashrc / .zshrc / etc. ->
+source "$HOME/yourproject/node_modules/.bin/nx.sh"
+```
+**Option 3:** Install by checking out the repository manually:
+```sh
+cd ~
 git clone https://github.com/evnp/nx.git
 
-# add to your .bashrc / .zshrc / etc. ->
+# then add the following to your .bashrc / .zshrc / etc. ->
 source "$HOME/nx/nx.sh"
-
-# or if you didn't check the repository in $HOME directory:
-source "/your/path/to/repository/nx/nx.sh"
 ```
 Open a new shell instance and `nx` will have initialized these aliases:
 ```sh
-alias n="nx"  # -> contextually equivalent to `npm ...` or `npm run ...`
-
-alias ns="nx start"      # -> npm start
-alias nt="nx test"       # -> npm test; also ntw -> npm run test -- --watch
-alias nb="nx build"      # -> npm run build
-alias nf="nx format"     # -> npm run format
-alias ni="nx install"    # -> npm install
-alias nu="nx uninstall"  # -> npm uninstall
-# also nis, nid, nus, nud for install/uninstall --save/--save-dev combinations, see above
+$ n  # type "n" at any time to see the current list of available nx aliases
+nb · npm run build
+nf · npm run format
+nh · npm run help
+ni · npm install
+nid · npm install --save-dev
+nig · npm install --global
+nis · npm install --save
+nk · npm link
+nl · npm run lint
+np · npm publish
+ns · npm start
+nt · npm run test
+nu · npm uninstall
+nud · npm uninstall --save-dev
+nug · npm uninstall --global
+nus · npm uninstall --save
 ```
 If you'd like to opt out of these default aliases or customize them, use env vars when initializing `nx` to configure:
 ```sh
