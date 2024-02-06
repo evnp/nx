@@ -13,7 +13,7 @@ Minimalist script runner for npm projects, focused on dev-ergonomics.
 [![npm package](https://img.shields.io/npm/v/nx.sh.svg)](https://www.npmjs.com/package/nx.sh)
 [![license](https://img.shields.io/github/license/evnp/nx.svg?color=blue)](https://github.com/evnp/nx/blob/master/LICENSE.md)
 
-`nx` lets you interact with any NPM package (anything with a `package.json`) in as few keystrokes as as possible.<br>
+`nx` lets you interact with any NPM package (anything with a `package.json`) in as few keystrokes as possible.<br>
 With a default setup of `source $HOME/nx/nx.sh` in your dotfile of choice, it will add these aliases to any shell:
 
 ```sh
