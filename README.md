@@ -169,7 +169,7 @@ The things that spark joy most reliably for me are small tools that I've built m
 
 The most effective way I've found to accomplish this comes in the form of small bash scripts, composed in traditional unix fashion. When I work on one of these scripts, I can feel the bash surface-area slowly solidifying in my mind. This has had a wonderful side-effect of bolstering my everyday shell-scripting abilities in a way nothing else has.
 
-Keeping things small can be a satisfying challenge. The right constraints are the difference between a chore and a puzzle. With `nx`, this approach has resulted in a program that fits onto a single MacBook 13" screen at 13pt font size, without compromising on the desired featureset:
+Keeping things small can be a satisfying challenge. The right constraints make the difference between a chore and a puzzle. With `nx`, this approach has resulted in a program that fits onto a single MacBook 13" screen at 13pt font size, without compromising on the desired featureset:
 
 ![full nx source code](https://raw.githubusercontent.com/evnp/nx/main/source.png)
 
