@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# :: nx 1.0.6 ::
+# :: nx 1.0.7 ::
 # shellcheck disable=SC2139 # shellcheck.net/wiki/SC2139 # allow parameter expansion within alias strings #
 function nx() ( local pkg="" cmd="" npmcmds="" nodev="" npmv=""
   npmcmds="run|$( npm -h | awk '/access/,/whoami/' | sed -E 's/ (help|start|test),//g' | xargs | sed 's/, /|/g' )" || true
   # :: print current aliases and exit when "n" is run with no arguments ::
-  [[ -z "$1" ]] && nodev="$( node -v | tr -d 'v' )" && npmv="$( npm -v )" && echo "node ${nodev} · npm ${npmv}"$'\n'"˙˙˙˙ ${nodev//?/˙}   ˙˙˙ ${npmv//?/˙}" \
-    && alias | grep "='nx " | sed -E -e 's/^alias //' -e 's/=/ · /' -e 's/nx /npm run /' -e "s/run (${npmcmds})/\1/" | tr -d "'" && exit 0
+  [[ -z "$1" ]] && nodev="$( node -v | tr -d 'v' )" && npmv="$( npm -v )" && echo "node ${nodev} · npm ${npmv}"$'\n'"˙˙˙˙ ${nodev//?/˙}   ˙˙˙ ${npmv//?/˙}" && \
+    alias | grep "='nx " | sed -E -e 's/^alias //' -e 's/=/ · /' -e 's/nx /npm run /' -e "s/run (${npmcmds})/\1/" | tr -d "'" && exit 0
   [[ "|${npmcmds}|" == *"|$1|"* ]] && cmd=('npm' "$1") || cmd=('npm' 'run' "$1")
   [[ "$2" == 'w' ]] && set -- "$1" '--' '--watch' "${@:3}" # :: rewrite 'w' to '--' '--watch' if provided as second arg ""
   shift # :: done with command arg, following args are all arguments to command ::
@@ -42,3 +42,5 @@ if ! [[ "${NX_ALIASES}" =~ ^(0|false|FALSE)$ ]]; then
     fi
   done
 fi
+
+
