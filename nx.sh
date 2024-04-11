@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# :: nx 1.0.6 ::
+# :: nx 1.0.7 ::
 # shellcheck disable=SC2139 # shellcheck.net/wiki/SC2139 # allow parameter expansion within alias strings #
 function nx() ( local pkg="" cmd="" npmcmds="" nodev="" npmv=""
   npmcmds="run|$( npm -h | awk '/access/,/whoami/' | sed -E 's/ (help|start|test),//g' | xargs | sed 's/, /|/g' )" || true
