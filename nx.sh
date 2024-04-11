@@ -27,11 +27,11 @@ function nx() ( local pkg="" cmd="" npmcmds=""
 )
 # :: default command alias :: n -> nx :: eg. n install -> npm install, n build -> npm run build, etc. :: to change name, export NX_COMMAND="name"; source "$HOME/nx/nx.sh" ::
 # :: default sub-command aliases :: to disable all aliases, export NX_ALIASES=0; source "$HOME/nx/nx.sh" ::
-#    ns -> npm start       nt -> npm test   nf -> npm run format   nl -> npm run lint    nh -> npm run help    np -> npm publish
-#    nb -> npm run build   nk -> npm link   ni -> npm install      nu -> npm uninstall   nis, nid, nus, nud -> npm [un]install --save[-dev]
+#    ni -> npm install     nis, nus -> npm [un]install --save       ns -> npm start     nt -> npm test   nf -> npm run format   nl -> npm run lint   nd -> npm run dev
+#    nu -> npm uninstall   nid, nud -> npm [un]install --save-dev   np -> npm publish   nk -> npm link   nb -> npm run build    nh -> npm run help
 if ! [[ "${NX_ALIASES}" =~ ^(0|false|FALSE)$ ]]; then
   alias "${NX_COMMAND:-n}"='nx'
-  for word in $( tr -cs '[:alnum:]._-/' ' ' <<< "${NX_ALIASES:-install,uninstall,start,test,build,format,lint,k/link,publish,help},${NX_EXTEND_ALIASES:-}" ); do
+  for word in $( tr -cs '[:alnum:]._-/' ' ' <<< "${NX_ALIASES:-install,uninstall,start,test,dev,build,format,lint,k/link,publish,help},${NX_EXTEND_ALIASES:-}" ); do
     [[ "${NX_COMMAND}" =~ ^(0|false|FALSE)$ ]] && NX_COMMAND='nx'
     alias "${NX_COMMAND:-n}${word:0:1}"="nx ${word#[a-z]/}"; [[ -n "${NX_VERBOSE}" ]] && alias "${NX_COMMAND:-n}${word:0:1}"
     if [[ "${word}" =~ ^(un)?install$ ]]; then

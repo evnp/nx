@@ -23,6 +23,7 @@ n CMD ARGS  ··>  npm CMD │ npm run CMD ┐ nx intelligently adds "run"
                                        │ only when necessary, but you
 ns  ····>  npm run start               │ may be explicit if you prefer
 nb  ····>  npm run build               └──────────────────────────────
+nd  ····>  npm run dev
 nf  ····>  npm run format
 nl  ····>  npm run lint
 np  ····>  npm run publish
@@ -45,7 +46,7 @@ nug NAME  ····>  npm uninstall --global NAME
 Of these aliases, only `nl` exists as a pre-existing Bash command (<https://ss64.com/bash/nl.html>), used for prefixing file lines with line numbers. If you'd like to disable this particular `nx` alias so that the built-in `nl` is not overridden, use this configuration in your shell rc file:
 
 ```bash
-export NX_ALIASES=install,uninstall,start,test,build,format,k/link,publish,help; source "$HOME/nx/nx.sh"
+export NX_ALIASES=install,uninstall,start,test,dev,build,format,k/link,publish,help; source "$HOME/nx/nx.sh"
 ```
 
 `nx` is less than 50 lines of code (with comments!) — if you're interested in knowing exactly what will be running on your system, peruse it [here](https://github.com/evnp/nx/blob/main/nx.sh). Any project with minimalism as a core tenet should strive to be understood completely within a few minutes. This is, and will remain, a goal of `nx`.
@@ -80,6 +81,7 @@ Open a new shell instance and `nx` will have initialized these aliases:
 ```sh
 $ n  # type "n" at any time to see the current list of available nx aliases
 nb · npm run build
+nd · npm run dev
 nf · npm run format
 nh · npm run help
 ni · npm install
