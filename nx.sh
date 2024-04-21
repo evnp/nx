@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # :: nx 1.0.6 ::
 # shellcheck disable=SC2139 # shellcheck.net/wiki/SC2139 # allow parameter expansion within alias strings #
-function nx() ( local pkg="" cmd="" npmcmds=""
+function nx() ( local pkg="" cmd="" npmcmds="" nodev="" npmv=""
   npmcmds="run|$( npm -h | awk '/access/,/whoami/' | sed -E 's/ (help|start|test),//g' | xargs | sed 's/, /|/g' )" || true
   # :: print current aliases and exit when "n" is run with no arguments ::
-  [[ -z "$1" ]] && alias | grep "='nx " | sed 's/^alias //' | sed 's/=/ · /' | sed 's/nx /npm run /' | sed -E "s/run (${npmcmds})/\1/" | tr -d "'" && exit 0
+  [[ -z "$1" ]] && nodev="$( node -v | tr -d 'v' )" && npmv="$( npm -v )" && echo "node ${nodev} · npm ${npmv}"$'\n'"˙˙˙˙ ${nodev//?/˙}   ˙˙˙ ${npmv//?/˙}" \
+    && alias | grep "='nx " | sed -E -e 's/^alias //' -e 's/=/ · /' -e 's/nx /npm run /' -e "s/run (${npmcmds})/\1/" | tr -d "'" && exit 0
   [[ "|${npmcmds}|" == *"|$1|"* ]] && cmd=('npm' "$1") || cmd=('npm' 'run' "$1")
   [[ "$2" == 'w' ]] && set -- "$1" '--' '--watch' "${@:3}" # :: rewrite 'w' to '--' '--watch' if provided as second arg ""
   shift # :: done with command arg, following args are all arguments to command ::
@@ -19,9 +20,9 @@ function nx() ( local pkg="" cmd="" npmcmds=""
   [[ "${NX_NVM}" =~ ^(1|true|TRUE)$ ]] && nvm use &>/dev/null
   # :: await confirmation of current node+npm versions before executing command :: to enable await-confirm behavior, export NX_CONFIRM=1 source "$HOME/nx/nx.sh" ::
   if [[ "${NX_CONFIRM}" =~ ^(1|true|TRUE)$ ]]; then
-    read -rsn1 -p "${cmd[*]} ${*}"$'\n'"${cmd[*]//?/˙} ${*//?/˙}"$'\n'"Press any key to run · CTRL+C to cancel · node $( node -v ) · npm $( npm -v )"$'\n\n'
+    read -rsn1 -p "${cmd[*]} ${*}"$'\n'"${cmd[*]//?/˙} ${*//?/˙}"$'\n'"Press any key to run · CTRL+C to cancel · node $( node -v | tr -d 'v' ) · npm $( npm -v )"$'\n\n'
   elif ! [[ "${NX_QUIET}" =~ ^(1|true|TRUE)$ ]]; then
-    echo "${cmd[*]} ${*}"$'\n'"${cmd[*]//?/˙} ${*//?/˙}"$'\n'"node $( node -v | tr -d 'v' ) · npm $( npm -v | tr -d 'v' )"$'\n\n'
+    echo "${cmd[*]} ${*}"$'\n'"${cmd[*]//?/˙} ${*//?/˙}"$'\n'"node $( node -v | tr -d 'v' ) · npm $( npm -v )"$'\n\n'
   fi
   if (( $# )); then "${cmd[@]}" "${@}"; else "${cmd[@]}"; fi # :: execute npm command (only pass extra arguments if there _are_ extra arguments)
 )
